@@ -1,4 +1,26 @@
 __pycache__
 .python-version
 .scannerwork
-.idea
+.idea 
+
+# Node dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Environment variables and local configs
+.env
+.env.local
+.env.test
+
+# Python build and cache artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+cov.xml
+flake8report.txt
+
+# Log files
+*.log
+flake8report.txt
