@@ -1,0 +1,6 @@
+[run]
+source = pokedex
+
+[report]
+fail_under = 70
+show_missing = True
