@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Automated Test Runner Engine
+  sut:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: openproject-test-runner
+    environment:
+      - NODE_ENV=test
+      - PYTHONPATH=.
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=test_db_user
+      - DB_PASSWORD=secure_test_password
+      - DB_NAME=test_account_db
+      - MAX_ALLOWED_DEPS=5
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Isolated PostreSQL Test Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=test_db_user
+      - POSTGRES_PASSWORD=secure_test_password
+      - POSTGRES_DB=test_account_db
+    ports:
+      - "5432:5432"
+    # Ensure service readiness before running unit test validations
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_db_user -d test_account_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
