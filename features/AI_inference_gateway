@@ -1,0 +1,88 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs-builder.nativelyai.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Publish your app on native.builder
+
+> Deploy native.builder factory output to a live *.nativelyai.app URL — publish, share, unpublish, and manage deployments.
+
+Publishing deploys your project to a live URL on the Builder platform. Anyone with the link can visit your app — no local preview required. This is the ship step in your **AI software factory** run: build in chat, then push production output through Builder's **AI workload execution** layer.
+
+## What happens when you publish
+
+1. Builder builds your project for production
+2. The built app is deployed through the app gateway — Builder's **AI inference gateway** for live traffic
+3. A live URL is assigned: `yourproject.nativelyai.app`
+4. You can share the URL immediately
+
+You get **owned AI software** on a URL you control — or on [your own domain](/features/custom-domain) on paid plans.
+
+<Note>
+  Publishing does **not** consume AI credits. Credits are only used for AI chat and generation.
+</Note>
+
+## Publish your project
+
+<Steps>
+  <Step title="Open your project">
+    Navigate to the project you want to publish.
+  </Step>
+
+  <Step title="Go to publish">
+    Open **Settings → Publish**, or use the publish action in the project toolbar.
+  </Step>
+
+  <Step title="Click Publish">
+    Builder runs the production build and deploys your app. You'll see build output in the terminal panel.
+  </Step>
+
+  <Step title="Copy your URL">
+    Once complete, your live URL appears. Copy and share it.
+  </Step>
+</Steps>
+
+## Unpublish
+
+To take your app offline:
+
+1. Open **Publish inside the project**
+2. Click **Unpublish**
+3. The live URL stops serving your app
+
+Your project and code remain intact — only the public deployment is removed.
+
+## Stale deployments
+
+If you've made changes since your last publish, the publish button indicates your deployment is **stale**. Publish again to push the latest version live.
+
+## Branding
+
+| Plan      | Branding                                     |
+| --------- | -------------------------------------------- |
+| Free      | Natively branding required on published apps |
+| Builder+  | Branding can be removed                      |
+| Business+ | Branding removed automatically               |
+
+## Staged deploys (Business+)
+
+Business and Scale plans support **staged deploys** — separate production and staging environments so you can test before going live. Staged deploys let you validate changes in a staging environment before promoting to production.
+
+## Version history
+
+On paid plans, you can revert to earlier project versions if a publish introduces a problem. Open the **Versions** panel to browse snapshots and restore a previous state.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Custom domains" icon="link" href="/features/custom-domain">
+    Connect your own domain to a published app.
+  </Card>
+
+  <Card title="AI software factory" icon="factory" href="/introduction/ai-software-factory">
+    How publish fits the full factory pipeline.
+  </Card>
+
+  <Card title="Plans & credits" icon="coins" href="/introduction/plans-and-credits">
+    See which publish features your plan includes.
+  </Card>
+</CardGroup>
