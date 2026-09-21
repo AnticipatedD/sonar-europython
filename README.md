@@ -172,3 +172,33 @@ For more information about SonarLint and its connected mode, you can visit the [
 Thank you for following this workshop!
 
 If you'd like to know more, feel free to visit [our website](https://sonarsource.com/) or our [community forum](https://community.sonarsource.com/). 
+
+## Pokedex App Architecture
+
+### Core Components
+- **`pokedex/app.py`**: Flask web application exposing routes for querying Pokemon and subscribing to updates.
+- **`pokedex/helper.py`**: `ConnectionWrapper` module handling database interactions safely using parameterized SQLite queries.
+- **`pokedex/schema.sql`**: Database schema defining the `POKEDEX` and `SUBSCRIBERS` relational tables.
+
+### Testing & CI
+Run all tests locally with coverage gating:
+```bash
+pytest --cov=pokedex --cov-fail-under=70
+# 1. Move scaffolding scripts to tools/ directory
+mkdir -p tools
+mv generate_all_files.py setup_sonar.py claude_workflow.py tools/ 2>/dev/null || true
+cat << 'EOF' > tools/README.md
+# Scaffolding & Workshop Tools
+These scripts are utility artifacts for setup and are separate from the core Flask Pokedex application.
+
+## Pokedex App Architecture
+
+### Core Components
+- **`pokedex/app.py`**: Flask web application exposing routes for querying Pokemon and subscribing to updates.
+- **`pokedex/helper.py`**: `ConnectionWrapper` module handling database interactions safely using parameterized SQLite queries.
+- **`pokedex/schema.sql`**: Database schema defining the `POKEDEX` and `SUBSCRIBERS` relational tables.
+
+### Testing & CI
+Run all tests locally with coverage gating:
+```bash
+pytest --cov=pokedex --cov-fail-under=70
