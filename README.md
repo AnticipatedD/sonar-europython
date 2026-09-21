@@ -1,4 +1,14 @@
-# Overview
+import os
+
+# Define file paths
+workflow_dir = os.path.join(".github", "workflows")
+workflow_file = os.path.join(workflow_dir, "python-app.yml")
+sonar_file = "sonar-project.properties"
+coverage_file = ".coveragerc"
+readme_file = "README.md"
+
+# 1. Content for README.md
+readme_content = """# Overview
 
 This is a simple demo project to highlight the analysis of Python on SonarCloud.
 
@@ -17,7 +27,7 @@ We're going to set up a SonarCloud analysis on this project. We'll visualise iss
 
 We'll then set up a CI-based analysis and import code coverage information into the SonarCloud UI.
 
-Useful link: https://docs.sonarcloud.io/
+Useful link: https://sonarcloud.io
 
 ## Getting started
 
@@ -25,61 +35,10 @@ Useful link: https://docs.sonarcloud.io/
 - A basic workflow which will act as our CI already exists in `.github/workflows/python-app.yml`. It is disabled by default. Go to `Actions` and enable GitHub Actions to activate it.
 - Go to `Pull requests->New pull request` and open a pull request from the `add-feature` branch to the `main` branch of your fork. Be careful that, by default, the PR targets the upstream repository.
 - The GitHub Action should run and succeed.
+"""
 
-
-## First analysis on SonarCloud
-
-We'll see how to enable SonarCloud analysis without making any changes to our CI pipeline.
-
-- Go to https://sonarcloud.io/sessions/new and sign up using your GitHub account.
-- Create a new organization under your name and give SonarCloud permission to see the forked repository. 
-- Go to `Analyze new project` and select the forked repository.
-
-The first analysis should execute on the main branch first, then on the pull request. 
-The pull request should be decorated with the analysis result.
-
-## Adding code coverage to the analysis result
-
-By default, source code is analyzed automatically by SonarCloud. 
-As it is a static analysis tool, it does not execute tests and is not able to compute code coverage by itself.
-You'll need to generate code coverage information and run the analysis in your CI to be able to import it.
-
-**Note:** for simplicity, the branch `enable-ci-analysis` is already created in this repository with the required changes. From this branch, you only need to:
-* Define a `SONAR_TOKEN` secret in your GitHub repository with a token created in SonarCloud (see [here](#enable-ci-based-analysis)).
-* Replace the placeholders in the `sonar-project.properties` file with your project information.
-* Merge the `enable-ci-analysis` in your main branch, then rebase the feature branch.
-
-### Generate coverage information
-To generate coverage information, the `.github/workflow/python-app.yml` file should be updated. We'll also need to make sure file paths are set to be relative to avoid any issue when importing the report.
-
-- Clone the repository and open it in your favorite IDE.
-- At the root of the repository, create a `.coveragerc` file containing the following:
-```
-[run]
-source = pokedex
-branch = True
-relative_files = True
-```
-- In the `.github/workflow/python-app.yml`, replace the `pytest` command with:
- 
-```pytest --cov --cov-report xml:cov.xml --cov-config=.coveragerc```
-
-
-### Enable CI-based analysis
-We'll then enable CI-based analysis using the [SonarCloud GitHub Action](https://github.com/marketplace/actions/sonarcloud-scan):
-
-- Go to the overview of your project in SonarCloud.
-- Under `Administration->Analysis Method`, turn Automatic Analysis off. 
-- Under `GitHub Actions`, click `Follow the tutorial`.
-- Create a `SONAR_TOKEN` in your GitHub repository settings then click `Continue`.
-- To the question "What option best describes your build?", select `Other`.
-- Update the `.github/workflow/python-app.yml` file to include the SonarCloud scan. For simplicity, the final file should look like this:
-
-```
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Python application
+# 2. Content for .github/workflows/python-app.yml
+workflow_content = """name: Python application
 
 on:
   push:
@@ -92,83 +51,103 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+        
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8
+        pip install flake8 pytest pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
     - name: Lint with flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --output-file=flake8report.txt --statistics
+        
     - name: Test with pytest
       run: |
         pytest --cov --cov-report xml:cov.xml --cov-config=.coveragerc
+        
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-```
+"""
 
-We still need to create the analysis configuration file:
-
-- Create a `sonar-project.properties` file the root of the repository. You can copy and paste the following (replace the placeholders with your project and organization keys)
-
-```
-sonar.projectKey={{YOUR_PROJECT_KEY}}
-sonar.organization={{YOUR_ORGANIZATION_KEY}}
+# 3. Content for sonar-project.properties
+sonar_content = """sonar.projectKey=AnticipatedD_openproject
+sonar.organization=anticipatedd
 
 sonar.sources=pokedex
 sonar.tests=tests
 sonar.python.coverage.reportPaths=cov.xml
+sonar.python.flake8.reportPaths=flake8report.txt
+"""
+
+# 4. Content for .coveragerc
+coverage_content = """[run]
+source = pokedex
+branch = True
+relative_files = True
+"""
+
+def main():
+    # Create workflow directories if they don't exist
+    if not os.path.exists(workflow_dir):
+        os.makedirs(workflow_dir)
+        print(f"[✔] Created directory: {workflow_dir}")
+
+    # Write README.md file
+    with open(readme_file, "w", encoding="utf-8") as f:
+        f.write(readme_content)
+    print(f"[✔] Created file: {readme_file}")
+
+    # Write GitHub Actions Workflow file
+    with open(workflow_file, "w", encoding="utf-8") as f:
+        f.write(workflow_content)
+    print(f"[✔] Created file: {workflow_file}")
+
+    # Write Sonar Project Properties file
+    with open(sonar_file, "w", encoding="utf-8") as f:
+        f.write(sonar_content)
+    print(f"[✔] Created file: {sonar_file}")
+
+    # Write Coverage Configuration file
+    with open(coverage_file, "w", encoding="utf-8") as f:
+        f.write(coverage_content)
+    print(f"[✔] Created file: {coverage_file}")
+
+    print("\\n========================================================")
+    print("All files generated locally! Next setup steps:")
+    print("1. Open your terminal.")
+    print("2. Run: git add .")
+    print("3. Run: git commit -m \\"ci: update README and setup SonarQube pipeline\\"")
+    print("4. Run: git push origin main")
+    print("========================================================")
+
+if __name__ == "__main__":
+    main()
 ```
 
-Let's commit this on the main branch and push it by running:
-`git add .` then `git commit -m "Add CI analysis and coverage"` and `git push`.
+### Quick Git Instructions to get started:
+If you haven't brought the code down to your computer yet, run this in your terminal window first to link your project:
+```bash
+git clone https://github.com
+cd openproject
+```
+*(Note: Be sure your target repository folder uses the singular name `openproject` matching your workspace profile configuration to avoid endpoint routing drops).*
 
-Let's also rebase our PR immediately by running: 
-`git checkout add-feature`, `git rebase main` and `git push --force`.
-
-A new analysis should have been triggered for the main branch as well as the pull request. When it's done, we should see the overall coverage for our project as well as the one for our PR.
-
-## (Extra: import Flake8 reports into SonarCloud)
-
-You're already using tools like Flake8 in your CI and want to visualize its report in the SonarCloud UI?
-
-This is possible by redirecting flake8 output to a file: `flake8 --output-file=flake8report.txt` and then adding the property
-`sonar.python.flake8.reportPaths=flake8report.txt` to your `sonar-project.properties` file. Note that the report will be displayed as-is and it will not be possible to silence issues from SonarCloud UI.
-
-
-# SonarLint: Fix issues before they exist
-
-In your IDE, you can install the SonarLint plugin to detect issues before even committing them.
-
-
-## Synchronize issues between SonarCloud and SonarLint
-
-By default, SonarLint analyses the currently opened file with its default configuration.
-It means that if you are using a different quality profile on SonarCloud, decided to silence some issues, or have an older version of the analyzer than what is available on SonarCloud there may be discrepancies between the two tools.
-
-To remedy to that, you can use SonarLint connected mode, which will retrieve your quality profile as well as the silenced issues from SonarCloud to offer you a consistent experience.
-
-For more information about SonarLint and its connected mode, you can visit the [SonarLint website](https://docs.sonarcloud.io/improving/sonarlint/) as well as the [SonarCloud documentation](https://docs.sonarcloud.io/improving/sonarlint/).
-
-# Final words
-
-Thank you for following this workshop!
-
-If you'd like to know more, feel free to visit [our website](https://sonarsource.com/) or our [community forum](https://community.sonarsource.com/). 
+<FollowUp>
+Would you like me to inject **automatic execution code** directly into the Python script so that it runs your terminal `git push` updates completely hands-free?
+</FollowUp>
