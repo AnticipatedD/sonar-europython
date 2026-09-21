@@ -1,0 +1,137 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs-builder.nativelyai.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# native.builder FAQ
+
+> FAQ for native.builder’s AI software factory — model lock-in, enterprise workflows, coding skills, credits, publishing, and workspaces.
+
+## AI software factory
+
+<AccordionGroup>
+  <Accordion title="What is an AI software factory?">
+    An **AI software factory** is a production system where specialized agents scope, build, and ship software through a repeatable pipeline — not a single chat session. **native.builder** runs as an **AI-native software factory**: Product Architect plans, the Builder agent codes, Task Planner tracks work, and Feedback captures product signal. See [AI software factory](/introduction/ai-software-factory) for the full overview.
+  </Accordion>
+
+  <Accordion title="How is Builder different from vibe coding tools?">
+    Builder is a **vibe coding alternative for teams**. Instead of one person prompting in isolation, your whole team shares a **workspace** — projects, roles, credits, and publish — with a **governed AI app builder** flow that scopes work before code is written. For enterprises, that means **vibe coding for enterprise** with structure, not chaos.
+  </Accordion>
+
+  <Accordion title="Is Builder model-agnostic? Can I avoid vendor lock-in?">
+    Yes. Builder is a **model-agnostic AI platform**. You pick models in chat; your projects, code, and deployments stay in your workspace. That lets you **build AI apps without model lock-in** and run **model-agnostic AI workflows** without rebuilding when providers change. Builder is the factory; models are fuel you can swap.
+  </Accordion>
+
+  <Accordion title="What is native.builder?">
+    native.builder (Builder for short) is an **AI software factory**. Specialized AI agents — like roles on a dev team — plan, build, and ship web applications for you. Instead of hiring developers or paying an agency, you describe what you need and agents produce real, publishable software in a fraction of the time and cost.
+  </Accordion>
+
+  <Accordion title="Do I need to know how to code?">
+    No. Builder is designed for both developers and non-developers. Describe what you want in plain language and the agents build it for you. Developers can also inspect and edit the generated code directly.
+  </Accordion>
+
+  <Accordion title="What kind of apps can I build?">
+    Builder produces modern web apps (including Vite/React and broader stacks via the app runtime). That covers landing pages, dashboards, internal tools, SaaS, and most standard web apps. Native mobile apps and backend-only services are outside the current scope, but support is expanding.
+  </Accordion>
+
+  <Accordion title="How do I create a new project?">
+    From the dashboard, type a description in the prompt box and submit. Builder creates a project and starts building. You can also open an existing project from your project list.
+  </Accordion>
+</AccordionGroup>
+
+## Enterprise and teams
+
+<AccordionGroup>
+  <Accordion title="Can enterprises use Builder for internal tools?">
+    Yes. Teams run Builder as an **internal AI software factory** for **custom AI business software** and **AI tools for internal operations**. Workspaces support roles, shared credits, staged deploys on Business plans, and Enterprise options for SSO and SLAs. See [Workspaces](/features/workspaces) and [Plans and credits](/introduction/plans-and-credits).
+  </Accordion>
+
+  <Accordion title="Does Builder support enterprise AI workflow automation?">
+    Builder acts as an **AI workflow builder for enterprise** — agents handle scope, build, planning, and feedback in sequence. You direct the line from chat, preview in real time, and [publish](/features/publish) when ready. It is **enterprise AI workflow automation** without stitching together separate design, code, and deploy tools.
+  </Accordion>
+</AccordionGroup>
+
+## Agencies and consulting
+
+<AccordionGroup>
+  <Accordion title="Is Builder good for agencies and consultants?">
+    Many agencies use Builder as an **AI delivery platform for agencies** and an **AI app builder for consulting firms**. You can run client work in dedicated projects, share live previews for stakeholder review, and ship to custom domains on paid plans. Read [AI software factory](/introduction/ai-software-factory#agencies-consultants-and-innovation-sprints) for sprint and prototyping workflows.
+  </Accordion>
+
+  <Accordion title="Can we run innovation sprints or hackathons on Builder?">
+    Yes. Teams use Builder as an **AI innovation sprint platform** and **AI prototyping platform for client delivery** — including **AI hackathon**-style events to scout talent and ship MVPs quickly. Clear briefs and [prompting best practices](/features/prompting) keep sprint credits on track.
+  </Accordion>
+</AccordionGroup>
+
+## Credits and billing
+
+<AccordionGroup>
+  <Accordion title="How many messages do I get per month?">
+    It depends on your plan and the models you use. A Builder plan (100 credits/mo) typically supports roughly 50–100 chat turns with standard models. Premium models consume more credits per message.
+  </Accordion>
+
+  <Accordion title="Do credits roll over?">
+    No. Monthly plan credits reset at the start of each billing cycle. Unused credits do not carry forward.
+  </Accordion>
+
+  <Accordion title="Can I share credits with my team?">
+    Yes. All workspace members share a single credit pool. When one person uses credits, the balance decreases for everyone in the workspace.
+  </Accordion>
+
+  <Accordion title="How do I upgrade or downgrade?">
+    Open **Settings → Billing** in the app and select a new plan. Upgrades take effect after payment is confirmed. Downgrades apply at the end of your current billing period.
+  </Accordion>
+
+  <Accordion title="What happens if my payment fails?">
+    Your workspace gets a grace period. If payment isn't resolved, paid-plan features may be restricted and your workspace reverts to free-tier limits until billing is fixed.
+  </Accordion>
+</AccordionGroup>
+
+## Publishing and domains
+
+<AccordionGroup>
+  <Accordion title="What URL does my published app get?">
+    Every published app gets a URL on `*.nativelyai.app`, derived from your project ID. You can also connect a custom domain on paid plans.
+  </Accordion>
+
+  <Accordion title="Can I unpublish my app?">
+    Yes. Open your project's publish settings and click **Unpublish**. The live URL will stop serving your app.
+  </Accordion>
+
+  <Accordion title="Does publishing cost credits?">
+    No. Publishing deploys your app but does not consume AI credits.
+  </Accordion>
+
+  <Accordion title="Can I use my own domain?">
+    Yes, on Builder plans and above. See [Custom domains](/features/custom-domain) for setup instructions.
+  </Accordion>
+</AccordionGroup>
+
+## Workspaces and collaboration
+
+<AccordionGroup>
+  <Accordion title="What is a workspace?">
+    A workspace is your team's container for projects, billing, and members — your factory floor in Builder. Every user belongs to at least one workspace.
+  </Accordion>
+
+  <Accordion title="What roles are available?">
+    Workspaces support **Owner**, **Admin**, **Member**, **Viewer**, and **Guest** roles. Owners and Admins manage billing and settings. Members can build and edit projects. Viewers have read-only access.
+  </Accordion>
+
+  <Accordion title="How do I invite someone?">
+    Open **Settings → Members** and send an invite by email. The invitee accepts via a link sent to their inbox.
+  </Accordion>
+</AccordionGroup>
+
+## Account and support
+
+<AccordionGroup>
+  <Accordion title="How do I get help?">
+    Join our [Discord community](https://discord.gg/uP2TQVtkRj) for the fastest responses — questions, tips, and updates from the team and other builders.
+
+    Use the in-app **Help** button to report bugs, ask questions, or request features. You can also email [support@nativelyai.com](mailto:support@nativelyai.com). See [Support](/support) for details.
+  </Accordion>
+
+  <Accordion title="How do I delete my account?">
+    Contact [support@nativelyai.com](mailto:support@nativelyai.com) to request account deletion.
+  </Accordion>
+</AccordionGroup>
