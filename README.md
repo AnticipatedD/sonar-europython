@@ -1,4 +1,6 @@
-# Overview
+# AnticipatedD/openprojects/sonar-europython overview
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
 This is a simple demo project to highlight the analysis of Python on SonarCloud.
 
@@ -17,7 +19,7 @@ We're going to set up a SonarCloud analysis on this project. We'll visualise iss
 
 We'll then set up a CI-based analysis and import code coverage information into the SonarCloud UI.
 
-Useful link: https://docs.sonarcloud.io/
+[Useful_link](https://docs.sonarcloud.io/)
 
 ## Getting started
 
@@ -31,7 +33,7 @@ Useful link: https://docs.sonarcloud.io/
 
 We'll see how to enable SonarCloud analysis without making any changes to our CI pipeline.
 
-- Go to https://sonarcloud.io/sessions/new and sign up using your GitHub account.
+- Go to [sonarcloud](https://sonarcloud.io/sessions/new) and sign up using your GitHub account.
 - Create a new organization under your name and give SonarCloud permission to see the forked repository. 
 - Go to `Analyze new project` and select the forked repository.
 
@@ -77,7 +79,7 @@ We'll then enable CI-based analysis using the [SonarCloud GitHub Action](https:/
 
 ```
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# For more information see: [Help](https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions)
 
 name: Python application
 
@@ -171,7 +173,7 @@ For more information about SonarLint and its connected mode, you can visit the [
 
 Thank you for following this workshop!
 
-If you'd like to know more, feel free to visit [our website](https://sonarsource.com/) or our [community forum](https://community.sonarsource.com/). 
+If you'd like to know more, feel free to visit [sonar official website](https://sonarsource.com/) or our [community forum](https://community.sonarsource.com/). 
 
 ## Pokedex App Architecture
 
