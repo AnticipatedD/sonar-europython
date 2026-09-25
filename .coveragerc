@@ -1,5 +1,6 @@
 [run]
 source = pokedex
+branch = True
 
 [report]
 fail_under = 70
