@@ -1,9 +1,19 @@
 import os
+import logging
 from flask import Flask, render_template, redirect, url_for, request, g
 from pokedex import helper
 
+# Initialize structured logging framework configuration bounds
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+logger = logging.getLogger("pokedex.app")
+
 app = Flask(__name__)
-app.config["DATABASE"] = "../database.db"
+# Read path from environment variable with fallback to maintain runtime flexibility
+app.config["DATABASE"] = os.environ.get("DATABASE_PATH", "../database.db")
 
 
 @app.route("/")
@@ -18,8 +28,13 @@ def index():
 @app.route("/subscribe", methods=["POST"])
 def subscribe():
     email = request.form["email"]
+    # Injected basic data field presence checks at boundary
+    if not email or not email.strip():
+        logger.warning("Empty email subscription registration attempt blocked.")
+        return redirect(url_for("index"))
+        
     helper.register_subscriber(get_db(), email)
-    # TODO: add confirmation message
+    logger.info(f"Successfully registered subscriber matching identity string criteria.")
     return redirect(url_for("index"))
 
 
@@ -34,12 +49,19 @@ def get_pokemon(pokemon_id: str):
             name=pokemon_name,
             pokemon_id=pokemon_id,
         )
-    except:
+    except (ValueError, TypeError, KeyError) as error:
+        # Replaced bare except rules with explicit validation typing check blocks
+        logger.warning(f"Failed query lookup invocation targeting id '{pokemon_id}': {str(error)}")
+        return redirect(url_for("index"))
+    except Exception as unexpected_error:
+        # Catch unexpected fatal conditions cleanly without swallowing the stack details
+        logger.exception(f"Unexpected operational layout mapping error tracking path: {str(unexpected_error)}")
         return redirect(url_for("index"))
 
 
 def get_db():
     if "db" not in g:
+        # Safely points to the configuration array parameter updated by the test suite
         g.db = helper.ConnectionWrapper(app.config["DATABASE"])
     return g.db
 
