@@ -8,27 +8,42 @@ on:
 
 jobs:
   build:
+    name: Build, Lint, and Test Gate
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
+        cache: 'pip'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest pytest-cov flake8
+        pip install pytest pytest-cov flake8 pip-audit
+
+    - name: Run Dependency Security Audit
+      run: |
+        pip-audit
 
     - name: Lint with flake8
       run: |
+        # Stop the build if there are Python syntax errors or undefined names
         flake8 pokedex tests --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 pokedex tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        # Enforce code style complexity constraints and reject merge on failure
+        flake8 pokedex tests --count --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Test with pytest and enforce 70% coverage gate
+    - name: Initialize Isolated Database Fixture
       run: |
-        pytest --cov=pokedex --cov-fail-under=70
+        if [ -f init_db.py ]; then
+          python init_db.py
+        fi
+
+    - name: Test with pytest and Enforce 70% Coverage Gate
+      run: |
+        pytest --cov=pokedex --cov-report=xml:cov.xml --cov-fail-under=70
